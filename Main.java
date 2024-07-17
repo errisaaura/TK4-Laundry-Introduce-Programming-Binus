@@ -1,7 +1,4 @@
-
-// import java.util.ArrayList;
 import java.util.Scanner;
-// import java.time.LocalDate;
 
 public class Main {
     private static final String LAUNDRY_NAME = "Laundry Express";
@@ -20,15 +17,6 @@ public class Main {
             System.out.println("Phone: " + LAUNDRY_PHONE);
             System.out.println();
 
-            // ini function add cashier dr inputan
-            System.out.println("Enter cashier name : ");
-            String cashName = scanner.nextLine();
-
-            System.out.println("Enter cashier phone number : ");
-            String cashPhoneNumber = scanner.nextLine();
-
-            laundry.addCashiers(cashName, cashPhoneNumber);
-
             // ini function add service langsung tanpa inputan
             laundry.addService("Cuci Kering", 6000);
             laundry.addService("Cuci Setrika", 8000);
@@ -36,9 +24,7 @@ public class Main {
             laundry.addService("Jaket", 10000);
             laundry.addService("Sprei", 20000);
 
-            System.out.println("==========List Layanan===============");
-
-            laundry.displayServices();
+            // laundry.addCustomer("errisa", "88"); //for testing
 
             System.out.println("Menu:");
             System.out.println("1. Menu Customer");
@@ -56,14 +42,10 @@ public class Main {
                     customerMenu();
                     break;
                 case 2:
-                    // laundry.createOrder();
-                    // handleCreateOrder(scanner, customerService, orderService, services, addons,
-                    // cashierName, cashierAddress, date);
+                    createOrder();
                     break;
                 case 3:
-                    // laundry.createInvoiceOrder();
-                    // handleCreateInvoice(scanner, orderService, cashierName, cashierAddress,
-                    // date);
+                    createInvoiceOrder();
                     break;
                 default:
                     System.out.println("Invalid option menu");
@@ -87,30 +69,30 @@ public class Main {
                 case 0:
                     return;
                 case 1:
-                    System.out.println("Enter customer name : ");
+                    System.out.print("Enter customer name: ");
                     String custName = scanner.nextLine();
 
-                    System.out.println("Enter customer phone number : ");
+                    System.out.print("Enter customer phone number: ");
                     String custPhoneNumber = scanner.nextLine();
 
                     laundry.addCustomer(custName, custPhoneNumber);
                     break;
                 case 2:
-                    System.out.println("Enter customer id : ");
+                    System.out.print("Enter customer id: ");
                     String custId = scanner.nextLine();
 
                     laundry.deleteCustomer(custId);
                     break;
                 case 3:
-                    System.out.println("Enter customer id");
+                    System.out.print("Enter customer id: ");
                     String idCustUpdate = scanner.nextLine();
 
                     Customer findCust = laundry.findCustById(idCustUpdate);
                     if (findCust != null) {
-                        System.out.println("Enter customer name : ");
+                        System.out.print("Enter customer name: ");
                         String custNewName = scanner.nextLine();
 
-                        System.out.println("Enter customer phone number : ");
+                        System.out.print("Enter customer phone number: ");
                         String custNewPhoneNumber = scanner.nextLine();
 
                         laundry.updateCustomer(idCustUpdate, custNewName, custNewPhoneNumber);
@@ -132,119 +114,128 @@ public class Main {
         System.exit(0);
     }
 
-    // private static void handleCRUDCustomer(Scanner scanner, CustomerService
-    // customerService) {
-    // System.out.println("CRUD Customer:");
-    // System.out.println("1. Add Customer");
-    // System.out.println("2. List Customers");
-    // System.out.println("3. Update Customer");
-    // System.out.println("4. Delete Customer");
-    // System.out.print("Choose an option: ");
-    // int option = scanner.nextInt();
-    // scanner.nextLine(); // consume newline
 
-    // switch (option) {
-    // case 1:
-    // System.out.print("Enter customer name: ");
-    // String name = scanner.nextLine();
-    // customerService.addCustomer(name);
-    // break;
-    // case 2:
-    // for (Customer customer : customerService.getCustomers()) {
-    // System.out.println(customer);
-    // }
-    // break;
-    // case 3:
-    // System.out.print("Enter customer ID to update: ");
-    // int updateId = scanner.nextInt();
-    // scanner.nextLine(); // consume newline
-    // System.out.print("Enter new customer name: ");
-    // String newName = scanner.nextLine();
-    // customerService.updateCustomer(updateId, newName);
-    // break;
-    // case 4:
-    // System.out.print("Enter customer ID to delete: ");
-    // int deleteId = scanner.nextInt();
-    // customerService.deleteCustomer(deleteId);
-    // break;
-    // default:
-    // System.out.println("Invalid option.");
-    // }
-    // }
+    public static void createOrder() {
+        System.out.print("Enter cashier name : ");
+        String cashName = scanner.nextLine();
 
-    // private static void handleCreateOrder(Scanner scanner, CustomerService
-    // customerService, OrderService orderService, ArrayList<Service> services,
-    // ArrayList<Addon> addons, String cashierName, String cashierAddress, LocalDate
-    // date) {
-    // System.out.print("Enter customer ID for order: ");
-    // int customerId = scanner.nextInt();
-    // Customer customer = customerService.getCustomerById(customerId);
-    // if (customer == null) {
-    // System.out.println("Customer not found.");
-    // return;
-    // }
+        System.out.print("Enter cashier phone number : ");
+        String cashPhoneNumber = scanner.nextLine();
 
-    // Order order = new Order(orderService.getNextOrderId(), customer);
+        laundry.addCashiers(cashName, cashPhoneNumber);
+    
+        laundry.displayCustomer();
+        System.out.print("Enter customer ID: ");
+        String customerId = scanner.nextLine();
+        Customer customer = laundry.findCustById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
 
-    // // Select services
-    // System.out.println("Select services (enter 0 to stop):");
-    // while (true) {
-    // for (Service service : services) {
-    // System.out.println(service.getId() + ". " + service.getName() + " - " +
-    // service.getPrice() + "/kg");
-    // }
-    // System.out.print("Choose a service by ID: ");
-    // int serviceId = scanner.nextInt();
-    // if (serviceId == 0) break;
+        laundry.displayCashiers();
+        System.out.print("Enter cashier ID: ");
+        String cashierId = scanner.nextLine();
+        Cashier cashier = laundry.findCashierById(cashierId);
+        if (cashier == null) {
+            System.out.println("Cashier not found!");
+            return;
+        }
 
-    // Service selectedService = null;
-    // for (Service service : services) {
-    // if (service.getId() == serviceId) {
-    // selectedService = service;
-    // break;
-    // }
-    // }
-    // if (selectedService == null) {
-    // System.out.println("Invalid service ID.");
-    // continue;
-    // }
+        String idOrder = Laundry.generateId("order");
 
-    // System.out.print("Enter quantity for " + selectedService.getName() + " (kg):
-    // ");
-    // int quantity = scanner.nextInt();
-    // order.addService(selectedService, quantity);
-    // }
+        Order newOrder = new Order(idOrder, customer, cashier);
 
-    // // Add order to order service
-    // orderService.addOrder(order);
+        while (true) {
+            laundry.displayServices();
+            System.out.print("Enter service ID to add (or 'done' to finish): ");
+            String serviceId = scanner.nextLine();
+            if (serviceId.equalsIgnoreCase("done")) {
+                break;
+            }
 
-    // // Payment
-    // System.out.print("Enter payment amount: ");
-    // double payment = scanner.nextDouble();
-    // double total = order.calculateTotal();
-    // double change = payment - total;
+            Service service = laundry.findServiceById(serviceId);
+            if (service == null) {
+                System.out.println("Service not found!");
+                continue;
+            }
 
-    // if (change < 0) {
-    // System.out.println("Insufficient payment. Please pay at least: " + total);
-    // } else {
-    // order.setPayment(payment);
-    // order.setChange(change);
-    // System.out.println("Change: " + change);
-    // }
-    // }
+            System.out.print("Enter quantity: ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
 
-    // private static void handleCreateInvoice(Scanner scanner, OrderService
-    // orderService, String cashierName, String cashierAddress, LocalDate date) {
-    // System.out.print("Enter order ID to create invoice: ");
-    // int orderId = scanner.nextInt();
-    // Order order = orderService.getOrderById(orderId);
-    // if (order == null) {
-    // System.out.println("Order not found.");
-    // return;
-    // }
+            newOrder.addOrderDetail(service, quantity);
+        }
 
-    // // Print invoice
-    // Invoice.printInvoice(order, LAUNDRY_NAME, LAUNDRY_ADDRESS, LAUNDRY_PHONE,
-    // cashierName, cashierAddress, date);
-    // }
+        // Display order details and total price
+        System.out.println("\nOrder ID: " + newOrder.getId());
+        System.out.println("Customer: " + newOrder.getCustomer().getName());
+        System.out.println("Cashier: " + newOrder.getCashier().getName());
+        System.out.println("Date: " + newOrder.getDate());
+        System.out.println("\n=== Order Details ===");
+
+        double totalPrice = 0;
+        for (OrderDetail detail : newOrder.getOrderDetails()) {
+            Service service = detail.getService();
+            int quantity = detail.getQuantity();
+            double price = service.getPrice() * quantity;
+            totalPrice += price;
+            System.out.println("Service: " + service.getName() + ", Quantity: " + quantity + ", Price: " + price);
+        }
+
+        System.out.println("\nTotal Price: " + totalPrice);
+
+        System.out.print("Enter payment amount: ");
+        double paymentAmount = scanner.nextDouble();
+        scanner.nextLine();
+
+        if (paymentAmount < totalPrice) {
+            System.out.println("Insufficient payment amount. Order cannot be processed.");
+            return;
+        }
+
+        double change = paymentAmount - totalPrice;
+        newOrder.setPaymentAmount(paymentAmount);
+        newOrder.setChange(change);
+
+        System.out.println("Payment: " + paymentAmount);
+        System.out.println("Change: " + change);
+
+        laundry.addOrder(newOrder);
+
+        
+    }
+
+    public static void createInvoiceOrder() {
+        laundry.displayOrders();
+
+        System.out.print("Enter order ID: ");
+        String orderId = scanner.nextLine();
+        Order order = laundry.findOrderById(orderId);
+        if (order == null) {
+            System.out.println("Order not found!");
+            return;
+        }
+
+        System.out.println("========= Invoice =========");
+        System.out.println("Laundry: " + LAUNDRY_NAME);
+        System.out.println("Address: " + LAUNDRY_ADDRESS);
+        System.out.println("Phone: " + LAUNDRY_PHONE);
+        System.out.println();
+        System.out.println("Order ID: " + order.getId());
+        System.out.println("Customer: " + order.getCustomer().getName());
+        System.out.println("Cashier: " + order.getCashier().getName());
+        System.out.println("Date: " + order.getDate()); 
+        System.out.println();
+        System.out.println("Services:");
+        double total = 0;
+        for (OrderDetail detail : order.getOrderDetails()) {
+            System.out.println("- " + detail.getService().getName() + " x" + detail.getQuantity() + " = " + (detail.getService().getPrice() * detail.getQuantity()));
+            total += detail.getService().getPrice() * detail.getQuantity();
+        }
+        System.out.println("Total: " + total);
+        System.out.println("Payment: " + order.getPaymentAmount());
+        System.out.println("Change: " + order.getChange());
+        System.out.println("==================");
+    }
 }

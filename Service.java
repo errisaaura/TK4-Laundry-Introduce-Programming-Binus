@@ -31,6 +31,6 @@ class Service {
 
     @Override
     public String toString() {
-        return "Service{id=" + id + ", name='" + name + "', price=" + price + "}";
+        return "ID Service: " + id + "\nService Name: " + name + "\nHarga: " + price ;
     }
 }

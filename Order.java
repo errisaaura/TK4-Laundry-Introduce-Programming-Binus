@@ -1,89 +1,75 @@
-// import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
 
 class Order {
-    // private int id;
-    // private Customer customer;
-    // private ArrayList<OrderItem<Service>> services = new ArrayList<>();
-    // private ArrayList<OrderItem<Addons>> addons = new ArrayList<>();
-    // private double payment;
-    // private double change;
+    private String id;
+    private Customer customer;
+    private Cashier cashier;
+    private String date;
+    private List<OrderDetail> orderDetails;
+    private double totalPrice;
+    private double paymentAmount;
+    private double change;
 
-    // public Order(int id, Customer customer) {
-    // this.id = id;
-    // this.customer = customer;
-    // }
+    public Order(String id, Customer customer, Cashier cashier) {
+        this.id = id;
+        this.customer = customer;
+        this.cashier = cashier;
+        this.date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        this.orderDetails = new ArrayList<>();
+        this.totalPrice = 0;
+        this.paymentAmount = 0;
+        this.change = 0;
+    }
 
-    // public int getId() {
-    // return id;
-    // }
+    public String getId() {
+        return id;
+    }
 
-    // public Customer getCustomer() {
-    // return customer;
-    // }
+    public Customer getCustomer() {
+        return customer;
+    }
 
-    // public void addService(Service service, int quantity) {
-    // services.add(new OrderItem<>(service, quantity));
-    // }
+    public Cashier getCashier() {
+        return cashier;
+    }
 
-    // public void addAddon(Addons addon, int quantity) {
-    // addons.add(new OrderItem<>(addon, quantity));
-    // }
+    public String getDate() {
+        return date;
+    }
 
-    // public ArrayList<OrderItem<Service>> getServices() {
-    // return services;
-    // }
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
 
-    // public ArrayList<OrderItem<Addons>> getAddons() {
-    // return addons;
-    // }
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 
-    // public double calculateTotal() {
-    // double total = 0;
-    // for (OrderItem<Service> serviceItem : services) {
-    // total += serviceItem.getItem().getPrice() * serviceItem.getQuantity();
-    // }
-    // for (OrderItem<Addons> addonItem : addons) {
-    // total += addonItem.getItem().getPrice() * addonItem.getQuantity();
-    // }
-    // return total;
-    // }
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
-    // public void setPayment(double payment) {
-    // this.payment = payment;
-    // }
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
 
-    // public double getPayment() {
-    // return payment;
-    // }
+    public void setPaymentAmount(double paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
 
-    // public void setChange(double change) {
-    // this.change = change;
-    // }
+    public double getChange() {
+        return change;
+    }
 
-    // public double getChange() {
-    // return change;
-    // }
+    public void setChange(double change) {
+        this.change = change;
+    }
+
+    public void addOrderDetail(Service service, int quantity) {
+        OrderDetail orderDetail = new OrderDetail(Laundry.generateId("orderdetail"), service, quantity);
+        orderDetails.add(orderDetail);
+    }
 }
-
-// class OrderService {
-// private ArrayList<Order> orders = new ArrayList<>();
-// private int nextOrderId = 1;
-
-// public void addOrder(Order order) {
-// orders.add(order);
-// nextOrderId++;
-// }
-
-// public Order getOrderById(int id) {
-// for (Order order : orders) {
-// if (order.getId() == id) {
-// return order;
-// }
-// }
-// return null;
-// }
-
-// public int getNextOrderId() {
-// return nextOrderId;
-// }
-// }

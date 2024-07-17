@@ -3,16 +3,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// services.add(new Service(1, "Cuci Lipat", 6000));
-// services.add(new Service(2, "Cuci Setrika", 8000));
-// services.add(new Service(3, "Setrika", 5000));
 
 public class Laundry {
 
     private List<Customer> customers;
     private List<Service> services;
     private List<Cashier> cashiers;
-    // private List<Order> orders;
+    private List<Order> orders;
     private static int counterCustomers = 1;
     private static int counterServices = 1;
     private static int counterCashiers = 1;
@@ -23,14 +20,14 @@ public class Laundry {
         customers = new ArrayList<>();
         services = new ArrayList<>();
         cashiers = new ArrayList<>();
-        // orders = new ArrayList<>();
+        orders = new ArrayList<>();
     }
 
     private static String getCurrentDate() {
         return new SimpleDateFormat("yyyyMMdd").format(new Date());
     }
 
-    private static String generateId(String type) {
+    public static String generateId(String type) {
         String dateNow = getCurrentDate();
 
         switch (type) {
@@ -140,16 +137,61 @@ public class Laundry {
         cashiers.add(newCashier);
     }
 
+    public Cashier findCashierById(String id) {
+        for (Cashier cashier : cashiers) {
+            if (cashier.getId().equals(id)) {
+                return cashier;
+            }
+        }
+        return null;
+    }
+
+    public void displayCashiers() {
+        if (!(cashiers.isEmpty())) {
+            System.out.println("\nList Cashier:");
+            for (int i = 1; i <= cashiers.size(); i++) {
+                System.out.println(cashiers.get(i - 1) + "\n");
+            }
+        } else {
+            System.out.println("No Cashier available");
+        }
+    }
+
     // Order
-    // public void createOrder() {
-    // LocalDate date = LocalDate.now();
-    // System.out.println("Date: " + date);
-    // System.out.println();
-    // }
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
 
-    // InvoiceOrder
-    // public void createInvoiceOrder() {
+    public Order findOrderById(String id) {
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+                return order;
+            }
+        }
+        return null;
+    }
 
-    // }
+    public Service findServiceById(String id) {
+        for (Service service : services) {
+            if (service.getId().equals(id)) {
+                return service;
+            }
+        }
+        return null;
+    }
+
+    public void displayOrders() {
+        if (orders.isEmpty()) {
+            System.out.println("No orders available.");
+        } else {
+            System.out.println("\nList of Orders:");
+            for (Order order : orders) {
+                System.out.println("Order ID: " + order.getId());
+                System.out.println("Customer: " + order.getCustomer().getName());
+                System.out.println("Cashier: " + order.getCashier().getName());
+                System.out.println("Date: " + order.getDate());
+            }
+        }
+    }
 
 }
