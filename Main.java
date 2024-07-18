@@ -78,12 +78,14 @@ public class Main {
                     laundry.addCustomer(custName, custPhoneNumber);
                     break;
                 case 2:
+                    laundry.displayCustomer();
                     System.out.print("Enter customer id: ");
                     String custId = scanner.nextLine();
 
                     laundry.deleteCustomer(custId);
                     break;
                 case 3:
+                    laundry.displayCustomer();
                     System.out.print("Enter customer id: ");
                     String idCustUpdate = scanner.nextLine();
 
@@ -160,11 +162,19 @@ public class Main {
                 continue;
             }
 
+            //=========IMPLEMENT EXEPTION HANDLING============
             System.out.print("Enter quantity: ");
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
-
-            newOrder.addOrderDetail(service, quantity);
+            try {
+                int quantity = Integer.parseInt(scanner.nextLine());
+                if (quantity <= 0) {
+                    throw new IllegalArgumentException("Quantity must be greater than 0");
+                }
+                newOrder.addOrderDetail(service, quantity);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity format. Please enter a valid number.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         // Display order details and total price
@@ -202,40 +212,40 @@ public class Main {
         System.out.println("Change: " + change);
 
         laundry.addOrder(newOrder);
-
-        
     }
 
     public static void createInvoiceOrder() {
-        laundry.displayOrders();
-
-        System.out.print("Enter order ID: ");
-        String orderId = scanner.nextLine();
-        Order order = laundry.findOrderById(orderId);
-        if (order == null) {
-            System.out.println("Order not found!");
-            return;
+        try {
+            laundry.displayOrders();
+            System.out.print("Enter order ID: ");
+            String orderId = scanner.nextLine();
+            Order order = laundry.findOrderById(orderId);
+            if (order == null) {
+                throw new Exception("Order not found!");
+            }
+    
+            System.out.println("========= Invoice =========");
+            System.out.println("Laundry: " + LAUNDRY_NAME);
+            System.out.println("Address: " + LAUNDRY_ADDRESS);
+            System.out.println("Phone: " + LAUNDRY_PHONE);
+            System.out.println();
+            System.out.println("Order ID: " + order.getId());
+            System.out.println("Customer: " + order.getCustomer().getName());
+            System.out.println("Cashier: " + order.getCashier().getName());
+            System.out.println("Date: " + order.getDate()); 
+            System.out.println();
+            System.out.println("Services:");
+            double total = 0;
+            for (OrderDetail detail : order.getOrderDetails()) {
+                System.out.println("- " + detail.getService().getName() + " x" + detail.getQuantity() + " = " + (detail.getService().getPrice() * detail.getQuantity()));
+                total += detail.getService().getPrice() * detail.getQuantity();
+            }
+            System.out.println("Total: " + total);
+            System.out.println("Payment: " + order.getPaymentAmount());
+            System.out.println("Change: " + order.getChange());
+            System.out.println("==================");
+        } catch (Exception e) {
+            System.out.println("Error creating invoice: " + e.getMessage());
         }
-
-        System.out.println("========= Invoice =========");
-        System.out.println("Laundry: " + LAUNDRY_NAME);
-        System.out.println("Address: " + LAUNDRY_ADDRESS);
-        System.out.println("Phone: " + LAUNDRY_PHONE);
-        System.out.println();
-        System.out.println("Order ID: " + order.getId());
-        System.out.println("Customer: " + order.getCustomer().getName());
-        System.out.println("Cashier: " + order.getCashier().getName());
-        System.out.println("Date: " + order.getDate()); 
-        System.out.println();
-        System.out.println("Services:");
-        double total = 0;
-        for (OrderDetail detail : order.getOrderDetails()) {
-            System.out.println("- " + detail.getService().getName() + " x" + detail.getQuantity() + " = " + (detail.getService().getPrice() * detail.getQuantity()));
-            total += detail.getService().getPrice() * detail.getQuantity();
-        }
-        System.out.println("Total: " + total);
-        System.out.println("Payment: " + order.getPaymentAmount());
-        System.out.println("Change: " + order.getChange());
-        System.out.println("==================");
     }
 }

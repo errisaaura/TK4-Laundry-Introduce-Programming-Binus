@@ -47,17 +47,20 @@ public class Laundry {
     }
 
     // Customer
+    //=========IMPLEMENT EXEPTION HANDLING============
     public void addCustomer(String name, String phoneNumber) {
-        Customer foundCustomer = findCustByNameAndPhoneNumber(name, phoneNumber);
-        if (foundCustomer != null) {
-            System.out.println("Customer already exist");
-        } else {
-            String id = generateId("customer");
-
-            Customer newCust = new Customer(id, name, phoneNumber);
-            customers.add(newCust);
-
-            System.out.println("Add Customer successfully");
+        try {
+            Customer foundCustomer = findCustByNameAndPhoneNumber(name, phoneNumber);
+            if (foundCustomer != null) {
+                throw new Exception("Customer already exists");
+            } else {
+                String id = generateId("customer");
+                Customer newCust = new Customer(id, name, phoneNumber);
+                customers.add(newCust);
+                System.out.println("Add Customer successfully");
+            }
+        } catch (Exception e) {
+            System.out.println("Error adding customer: " + e.getMessage());
         }
     }
 
@@ -83,16 +86,16 @@ public class Laundry {
         }
     }
 
+    //==========IMPLEMENT LAMBDA EXPRESSION===========
     public void displayCustomer() {
-        if (!(customers.isEmpty())) {
-            System.out.println("\nList Customers:");
-            for (int i = 1; i <= customers.size(); i++) {
-                System.out.println(customers.get(i - 1) + "\n");
-            }
+        if (!customers.isEmpty()) {
+            System.out.println("\nList Customers :");
+            customers.forEach(customer -> System.out.println(customer + "\n"));
         } else {
             System.out.println("No Customer available");
         }
     }
+    
 
     public Customer findCustById(String id) {
         for (Customer customer : customers) {
@@ -113,20 +116,28 @@ public class Laundry {
     }
 
     // Service
+    //=========IMPLEMENT EXEPTION HANDLING============
     public void addService(String name, double price) {
-        String id = generateId("service");
-
-        Service newService = new Service(id, name, price);
-        services.add(newService);
+        try {
+            if (price <= 0) {
+                throw new IllegalArgumentException("Price must be greater than zero");
+            }
+            String id = generateId("service");
+            Service newService = new Service(id, name, price);
+            services.add(newService);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid service price: " + e.getMessage());
+        }
     }
 
+    //==========IMPLEMENT LAMBDA EXPRESSION===========
     public void displayServices() {
-        System.out.println("\nList of Services:");
-        for (int i = 1; i <= services.size(); i++) {
-            System.out.println("Service#" + i);
-            System.out.println(services.get(i - 1) + "\n");
+        if (!services.isEmpty()) {
+            System.out.println("\nList Services :");
+            services.forEach(service -> System.out.println(service + "\n"));
+        } else {
+            System.out.println("No Customer available");
         }
-
     }
 
     // Cashier
@@ -146,12 +157,11 @@ public class Laundry {
         return null;
     }
 
+    //==========IMPLEMENT LAMBDA EXPRESSION===========
     public void displayCashiers() {
-        if (!(cashiers.isEmpty())) {
-            System.out.println("\nList Cashier:");
-            for (int i = 1; i <= cashiers.size(); i++) {
-                System.out.println(cashiers.get(i - 1) + "\n");
-            }
+        if (!cashiers.isEmpty()) {
+            System.out.println("\nList Cashiers :");
+            cashiers.forEach(cashier -> System.out.println(cashier + "\n"));
         } else {
             System.out.println("No Cashier available");
         }

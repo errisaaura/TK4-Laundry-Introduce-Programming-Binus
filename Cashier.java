@@ -1,37 +1,10 @@
-public class Cashier {
-    private String id;
-    private String name;
-    private String phoneNumber;
-
+public class Cashier extends Person {
     public Cashier(String id, String name, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        super(id, name, phoneNumber);
     }
 
     @Override
     public String toString() {
-        return "ID Cashier: " + id + "\nCashier Name: " + name + "\nPhone Number: " + phoneNumber;
+        return "ID Cashier: " + getId() + "\nCashier Name: " + getName() + "\nPhone Number: " + getPhoneNumber();
     }
-
 }
