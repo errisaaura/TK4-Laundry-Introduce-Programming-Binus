@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-    private static final String LAUNDRY_NAME = "Laundry Express";
+    private static final String LAUNDRY_NAME = "Quick Wash";
     private static final String LAUNDRY_ADDRESS = "Jl. Merdeka No. 1";
     private static final String LAUNDRY_PHONE = "08123456789";
 
