@@ -24,7 +24,7 @@ public class Main {
             laundry.addService("Jaket", 10000);
             laundry.addService("Sprei", 20000);
 
-            laundry.addCustomer("errisa", "88"); //for testing
+            // laundry.addCustomer("errisa", "88"); //for testing
 
             System.out.println("Menu:");
             System.out.println("1. Menu Customer");
