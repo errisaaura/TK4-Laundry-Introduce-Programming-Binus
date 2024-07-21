@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         while (true) {
             // Display laundry description
-            System.out.println("=== Laundry Info ===");
+            System.out.println("\n============================== Laundry Info ==============================");
             System.out.println("Name: " + LAUNDRY_NAME);
             System.out.println("Address: " + LAUNDRY_ADDRESS);
             System.out.println("Phone: " + LAUNDRY_PHONE);
@@ -24,7 +24,7 @@ public class Main {
             laundry.addService("Jaket", 10000);
             laundry.addService("Sprei", 20000);
 
-            // laundry.addCustomer("errisa", "88"); //for testing
+            laundry.addCustomer("errisa", "88"); //for testing
 
             System.out.println("Menu:");
             System.out.println("1. Menu Customer");
@@ -69,6 +69,7 @@ public class Main {
                 case 0:
                     return;
                 case 1:
+                    System.out.println("\n============================== Tambah Customer ==============================");
                     System.out.print("Enter customer name: ");
                     String custName = scanner.nextLine();
 
@@ -78,6 +79,7 @@ public class Main {
                     laundry.addCustomer(custName, custPhoneNumber);
                     break;
                 case 2:
+                    System.out.println("\n============================== Hapus Customer ==============================");
                     laundry.displayCustomer();
                     System.out.print("Enter customer id: ");
                     String custId = scanner.nextLine();
@@ -85,6 +87,7 @@ public class Main {
                     laundry.deleteCustomer(custId);
                     break;
                 case 3:
+                    System.out.println("\n============================== Edit Customer ==============================");
                     laundry.displayCustomer();
                     System.out.print("Enter customer id: ");
                     String idCustUpdate = scanner.nextLine();
@@ -103,6 +106,7 @@ public class Main {
                     }
                     break;
                 case 4:
+                    System.out.println("\n============================== List Customer ==============================");
                     laundry.displayCustomer();
                     break;
                 default:
@@ -118,6 +122,7 @@ public class Main {
 
 
     public static void createOrder() {
+        System.out.println("\n============================== Tambah Order ==============================");
         System.out.print("Enter cashier name : ");
         String cashName = scanner.nextLine();
 
@@ -178,12 +183,14 @@ public class Main {
         }
 
         // Display order details and total price
+        System.out.println("\n===========================================================================");
         System.out.println("\nOrder ID: " + newOrder.getId());
         System.out.println("Customer: " + newOrder.getCustomer().getName());
         System.out.println("Cashier: " + newOrder.getCashier().getName());
         System.out.println("Date: " + newOrder.getDate());
         System.out.println("\n=== Order Details ===");
 
+        // System.out.println("Nama Services \t\tQuantitas \tHarga");
         double totalPrice = 0;
         for (OrderDetail detail : newOrder.getOrderDetails()) {
             Service service = detail.getService();
@@ -191,6 +198,7 @@ public class Main {
             double price = service.getPrice() * quantity;
             totalPrice += price;
             System.out.println("Service: " + service.getName() + ", Quantity: " + quantity + ", Price: " + price);
+            // System.out.println("-" + service.getName()+ "\t" + "x" + "\t" + quantity + "\t"+  price);
         }
 
         System.out.println("\nTotal Price: " + totalPrice);
@@ -216,6 +224,7 @@ public class Main {
 
     public static void createInvoiceOrder() {
         try {
+            
             laundry.displayOrders();
             System.out.print("Enter order ID: ");
             String orderId = scanner.nextLine();
@@ -224,7 +233,7 @@ public class Main {
                 throw new Exception("Order not found!");
             }
     
-            System.out.println("========= Invoice =========");
+            System.out.println("\n============================== Invoice Order ==============================");
             System.out.println("Laundry: " + LAUNDRY_NAME);
             System.out.println("Address: " + LAUNDRY_ADDRESS);
             System.out.println("Phone: " + LAUNDRY_PHONE);
@@ -236,14 +245,16 @@ public class Main {
             System.out.println();
             System.out.println("Services:");
             double total = 0;
+            // System.out.println("Nama Services \t\tQuantitas \tHarga");
             for (OrderDetail detail : order.getOrderDetails()) {
                 System.out.println("- " + detail.getService().getName() + " x" + detail.getQuantity() + " = " + (detail.getService().getPrice() * detail.getQuantity()));
+                // System.out.println("-" + detail.getService().getName()+ "\t" + "x" + "\t" + detail.getQuantity() + "\t"+  (detail.getService().getPrice() * detail.getQuantity()));
                 total += detail.getService().getPrice() * detail.getQuantity();
             }
             System.out.println("Total: " + total);
             System.out.println("Payment: " + order.getPaymentAmount());
             System.out.println("Change: " + order.getChange());
-            System.out.println("==================");
+            System.out.println("\n===========================================================================");
         } catch (Exception e) {
             System.out.println("Error creating invoice: " + e.getMessage());
         }
