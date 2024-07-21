@@ -17,15 +17,6 @@ public class Main {
             System.out.println("Phone: " + LAUNDRY_PHONE);
             System.out.println();
 
-            // ini function add service langsung tanpa inputan
-            laundry.addService("Cuci Kering", 6000);
-            laundry.addService("Cuci Setrika", 8000);
-            laundry.addService("Setrika", 5000);
-            laundry.addService("Jaket", 10000);
-            laundry.addService("Sprei", 20000);
-
-            // laundry.addCustomer("errisa", "88"); //for testing
-
             System.out.println("Menu:");
             System.out.println("1. Menu Customer");
             System.out.println("2. Create Order");
@@ -122,6 +113,13 @@ public class Main {
 
 
     public static void createOrder() {
+        // ini function add service langsung tanpa inputan
+        laundry.addService("Cuci Kering", 6000);
+        laundry.addService("Cuci Setrika", 8000);
+        laundry.addService("Setrika", 5000);
+        laundry.addService("Jaket", 10000);
+        laundry.addService("Sprei", 20000);
+
         System.out.println("\n============================== Tambah Order ==============================");
         System.out.print("Enter cashier name : ");
         String cashName = scanner.nextLine();
